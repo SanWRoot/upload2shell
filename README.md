@@ -1,6 +1,9 @@
-# CVE-2026-125396 bomb fuzz exploit
+# CVE-2026-125396 
+[![Python](https://img.shields.io/badge/python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![CVE](https://img.shields.io/badge/CVE--2026--125396-Critical-red?style=for-the-badge)](https://nvd.nist.gov/vuln/detail/cve-2026-125396)
+[![CVSS v4.0](https://img.shields.io/badge/CVSS%20v4.0-8.5-critical?style=for-the-badge)]()
 
-[English](README_EN.md) | [中文](README.md)
+
 
 **Referer**: https://pwn.ai/upload2shell/research.html
 
@@ -13,6 +16,13 @@ A fuzzing-enabled version of upload2shell; supports fuzzing on 64-bit LP64, othe
 This is a logical UAF, address-independent, so you can prebuild a fuzz image that can fuzz a large number of versions at once. That is what makes it a bit like 24shell.
 
 Similar to the Log4j approach: image/document uploads, thumbnails, printing, preview/import, etc. are all fuzz surfaces; if the backend uses Ghostscript, it can be hit.
+
+
+## Attack Chain
+<img width="1320" height="1087" alt="image" src="https://github.com/user-attachments/assets/6bbe86bb-9ee3-416a-b308-b9408386da83" />
+
+
+
 
 ## Quick Start
 

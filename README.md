@@ -1,7 +1,6 @@
 # CVE-2026-125396 
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-![Static Badge](https://img.shields.io/badge/CVE--2026--125396-Critical-red?style=for-the-badge)
-(https://nvd.nist.gov/vuln/detail/cve-2026-125396)
+[![CVE](https://img.shields.io/badge/CVE--2026--125396-Critical-red?style=for-the-badge)](https://nvd.nist.gov/vuln/detail/cve-2026-125396)
 [![Static Badge](https://img.shields.io/badge/CVSS%20v4.0-8.5-critical?style=for-the-badge)]()
 
 
